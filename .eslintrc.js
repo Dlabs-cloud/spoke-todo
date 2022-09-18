@@ -10,6 +10,8 @@ module.exports = {
 
   plugins: ['@typescript-eslint', 'import'],
 
+  ignorePatterns: ['!.*', 'dist', 'node_modules', '.commitlintrc.ts'],
+
   rules: {
     // General
     '@typescript-eslint/no-unused-vars': 0,
