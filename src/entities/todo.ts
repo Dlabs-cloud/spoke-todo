@@ -8,9 +8,17 @@ export class Todo {
   @Column()
   note: string;
 
+  @Column()
+  status: TodoStatus;
+
   @UpdateDateColumn()
   updatedAt: Date;
 
   @UpdateDateColumn()
   createdAt: Date;
+}
+
+export enum TodoStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
 }
