@@ -1,15 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { DB } from '../../datasource';
-import { Todo } from '../../entities/todo';
+import { Todo } from '../../datasource/entities/todo';
 
 export const list = async (req: Request, res: Response, next: NextFunction) => {
   const { status } = req.query;
-  const todoQuery = DB.getRepository(Todo).createQueryBuilder();
+  const todoQuery = DB.getRepository(Todo).createQueryBuilder('todo');
+  todoQuery.where('todo.isDeleted = :deleted', { deleted: false });
   if (status) {
-    todoQuery.where('status = :status', { status });
+    todoQuery.where('todo.status = :status', { status });
   }
-  const todos = await todoQuery.getMany();
-  res.status(200).json(todos);
+
+  type TodoItem = Omit<Todo, 'isDeleted'>;
+  const todoList: TodoItem[] = (await todoQuery.getMany()).map(({ isDeleted, ...rest }) => {
+    return rest;
+  });
+  res.status(200).json(todoList);
   next();
 };

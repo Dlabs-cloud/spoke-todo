@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { DB } from '../../datasource';
-import { Todo, TodoStatus } from '../../entities/todo';
+import { Todo, TodoStatus } from '../../datasource/entities/todo';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   const { note, status } = req.body;

@@ -11,7 +11,7 @@ const datasourceConfig: DataSourceOptions = {
   database: config.get<string>('db.name'),
   synchronize: true,
   logging: true,
-  entities: ['src/entities/*.ts'],
+  entities: ['src/datasource/entities/*.ts'],
 };
 
 export = datasourceConfig;

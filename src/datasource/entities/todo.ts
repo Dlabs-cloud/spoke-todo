@@ -11,6 +11,9 @@ export class Todo {
   @Column()
   status: TodoStatus;
 
+  @Column({ default: 'false', type: 'bool' })
+  isDeleted = false;
+
   @UpdateDateColumn()
   updatedAt: Date;
 
