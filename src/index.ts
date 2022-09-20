@@ -1,26 +1,26 @@
 import 'reflect-metadata';
+import config from 'config';
 
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import express from 'express';
-
+import { app } from './app';
 import { DB } from './datasource';
-import routes from './routes';
 
-export const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const start = (app) => {
+  const port = config.get('port');
+  try {
+    DB.initialize()
+      .then(() => {
+        console.log('DB started successfully');
+        return Promise.resolve();
+      })
+      .then((_) => {
+        return app.listen(port, () => {
+          console.log(`Api running at http://localhost:${port}`);
+        });
+      });
+  } catch (err) {
+    console.error(err);
+    // process.exit();
+  }
+};
 
-app.use('/api', routes);
-
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`Server is running on port`, port);
-});
-(async () => {
-  await DB.initialize().then(() => {
-    console.log('Data base started gracefully!!');
-  });
-})();
+start(app);

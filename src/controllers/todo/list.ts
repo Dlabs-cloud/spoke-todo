@@ -6,7 +6,7 @@ import { Todo } from '../../datasource/entities/todo';
 export const list = async (req: Request, res: Response, next: NextFunction) => {
   const { status } = req.query;
   const todoQuery = DB.getRepository(Todo).createQueryBuilder('todo');
-  todoQuery.where('todo.isDeleted = :deleted', { deleted: false });
+  todoQuery.where('todo.isDeleted = :deleted', { deleted: 0 });
   if (status) {
     todoQuery.where('todo.status = :status', { status });
   }

@@ -6,18 +6,19 @@ import { CustomError } from '../../utils/custom.error';
 
 export const edit = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
-  const { note, status } = req.body;
+  const { name, status } = req.body;
   const todo = await DB.getRepository(Todo).findOneBy({
     id: Number(id),
-    isDeleted: false,
+    isDeleted: 0,
   });
   if (!todo) {
-    throw new CustomError(404, 'notfound', 'Todo cannot be found');
+    const error = new CustomError(404, 'notfound', 'Todo cannot be found');
+    next(error);
+    return;
   }
-  todo.note = note;
+  todo.name = name;
   todo.status = status;
   await DB.getRepository(Todo).save(todo);
-
-  res.status(204);
+  res.status(204).json();
   next();
 };

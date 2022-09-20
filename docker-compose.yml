@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=spoke_ai
+      - POSTGRES_PASSWORD=spoke_ai_password
+      - POSTGRES_DB=spoke_ai_todo_db
+    ports:
+      - '5674:5432'
+
+  app:
+    container_name: spoke_ai
+    entrypoint: /bin/sh './scripts/be-node-dev.sh'
+    build: .
+    ports:
+      - 5465:3000
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_CONNECTION: postgres
+      DB_HOST: postgres
+      DB_USER: spoke_ai
+      DB_PASSWORD: spoke_ai_password
+      DB_NAME: spoke_ai_todo_db
+      DB_POST: 5432
+    depends_on:
+      - postgres

@@ -6,13 +6,13 @@ export class Todo {
   id: number;
 
   @Column()
-  note: string;
+  name: string;
 
   @Column()
   status: TodoStatus;
 
-  @Column({ default: 'false', type: 'bool' })
-  isDeleted = false;
+  @Column({ type: 'int', default: 0 })
+  isDeleted = 0;
 
   @UpdateDateColumn()
   updatedAt: Date;
