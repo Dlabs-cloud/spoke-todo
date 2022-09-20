@@ -16,6 +16,7 @@ const datasourceConfig = (): DataSourceOptions => {
       database: config.get<string>('db.name'),
       synchronize: true,
       logging: true,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
       entities: [Todo],
     };
   }
