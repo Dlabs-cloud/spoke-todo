@@ -9,7 +9,6 @@
     "build": "tsc",
     "start": "NODE_PATH=./dist node ./dist/index.js",
     "prepare": "husky install",
-    "prod:build": " npm install && tsc",
     "lint": "eslint --max-warnings 0 . && npm run tsc",
     "lint-fix": "eslint --fix .",
     "lint-staged-husky": "lint-staged",
