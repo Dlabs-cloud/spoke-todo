@@ -14,9 +14,9 @@ services:
     entrypoint: /bin/sh './scripts/be-node-dev.sh'
     build: .
     ports:
-      - 5465:3000
+      - 3000:3000
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       PORT: 3000
       DB_CONNECTION: postgres
       DB_HOST: postgres
